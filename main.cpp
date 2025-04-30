@@ -36,9 +36,17 @@ public:
                     //Польза --------------------------------------------------------------------|
                     std::cout << "Новое подключение: " <<
                         socket->remote_endpoint().address().to_string() << std::endl;
-                    StartSession* session = new StartSession(context, std::move(socket));
-                    session->_process_network();
+                    try {
+                        StartSession* session = new StartSession(context, std::move(socket));
+                    }
                     //Польза --------------------------------------------------------------------|
+                    catch (...) {
+                        std::cerr << socket->remote_endpoint().address().to_string() << 
+                            ": создать класс пользователя не удалось\n";
+                        if (socket->is_open()) {
+                            socket->close();
+                        }
+                    }
                 }
             }
             _async_accept(); //Гарант

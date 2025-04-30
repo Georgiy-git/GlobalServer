@@ -19,6 +19,7 @@ public:
     void _process_buffer(size_t bytes);
     void _send_line(std::string);
     void _close();
+    void _get_name();
 
     //Функционал --------------------------------------------------------------------|
     void _hello();
@@ -33,4 +34,5 @@ private:
     streambuf buf;
     std::istream input;
     std::ostream output;
+    std::string remote_ip;
 };
