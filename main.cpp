@@ -1,12 +1,16 @@
 #include "StartSession.hpp"
-
-#include <boost/asio.hpp>
-#include <iostream>
-#include <string>
+#include "loger.hpp"
 
 using namespace boost::asio;
 
 const int port = 53888;
+
+//ЛОГ --------------------------------------------------------------------|
+int count_make_user = 0;
+int count_del_user = 0;
+int count_message = 0;
+int count_send_line = 0;
+//ЛОГ --------------------------------------------------------------------|
 
 class Connector {
 public:
@@ -14,6 +18,13 @@ public:
         : context{ context }, acceptor{ acceptor }
     {
         std::cout << "Сервер запущен с портом " << port << std::endl;
+    }
+
+    ~Connector() {
+        make_log("Принято запросов: " + std::to_string(count_message));
+        make_log("Отправлено сообщений: " + std::to_string(count_send_line));
+        make_log("Создано объектов пользователей: " + std::to_string(count_make_user));
+        make_log("Удалено объектов пользователей: " + std::to_string(count_del_user) + "\n");
     }
 
     void _async_accept() {
@@ -38,6 +49,7 @@ public:
                         socket->remote_endpoint().address().to_string() << std::endl;
                     try {
                         StartSession* session = new StartSession(context, std::move(socket));
+                        count_make_user++; //log
                     }
                     //Польза --------------------------------------------------------------------|
                     catch (...) {

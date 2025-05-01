@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <thread>
+#include <filesystem>
+#include <fstream>
 
 using namespace boost::asio;
 using error_code = boost::system::error_code;
@@ -20,10 +22,14 @@ public:
     void _send_line(std::string);
     void _close();
     void _get_name();
+    int _get_ok();
 
     //Функционал --------------------------------------------------------------------|
     void _hello();
     void _help();
+    void _stop();
+    void _files();
+    void _load_file(std::string);
     //Функционал --------------------------------------------------------------------|
 
 private:
@@ -32,6 +38,7 @@ private:
     std::string name = "noname";
     std::mutex mutex;
     streambuf buf;
+    streambuf buf_files;
     std::istream input;
     std::ostream output;
     std::string remote_ip;
