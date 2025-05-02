@@ -184,7 +184,7 @@ void StartSession::_load_file(std::string file_name)
     error_code _ec;
     size_t file_size;
     try {
-        file_size = std::filesystem::file_size(std::filesystem::path(file_name), _ec);
+        file_size = std::filesystem::file_size(file_name, _ec);
     }
     catch (...) {
         _send_line("Не удалось вычислить размер файла.");

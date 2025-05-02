@@ -17,7 +17,7 @@ public:
     Connector(io_context& context, ip::tcp::acceptor& acceptor)
         : context{ context }, acceptor{ acceptor }
     {
-        std::cout << "Сервер запущен с портом " << port << std::endl;
+        std::cout << "Server start with port " << port << std::endl;
     }
 
     ~Connector() {
